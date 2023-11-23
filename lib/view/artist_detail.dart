@@ -13,13 +13,14 @@ class ArtistDetail extends StatefulWidget {
 
 class _ArtistDetailState extends State<ArtistDetail> {
   final scrollController = ScrollController();
+  final Color appTheme = const Color.fromARGB(255, 240, 55, 108);
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.sizeOf(context);
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blueAccent,
+        backgroundColor: appTheme,
         leading: const IconButton(
           onPressed: null,
           icon: Icon(
@@ -40,7 +41,14 @@ class _ArtistDetailState extends State<ArtistDetail> {
                 width: screenSize.width,
                 //height: screenSize.height,
                 decoration: const BoxDecoration(
-                  color: Colors.white,
+                  gradient: LinearGradient(
+                    begin: Alignment.topRight,
+                    end: Alignment.bottomLeft,
+                    colors: [
+                      Color.fromARGB(255, 234, 141, 141),
+                      Color.fromARGB(255, 255, 221, 225),
+                    ],
+                  ),
                   borderRadius: BorderRadius.only(
                     topRight: Radius.circular(30),
                     topLeft: Radius.circular(30),
@@ -77,7 +85,7 @@ class _ArtistDetailState extends State<ArtistDetail> {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.blueAccent,
+        backgroundColor: appTheme,
         selectedItemColor: Colors.white,
         unselectedItemColor: Colors.black,
         items: const [
@@ -164,7 +172,13 @@ class InfoSection extends StatelessWidget {
                 style: const TextStyle(fontSize: 50),
               ),
             ),
-            IconButton(icon: const Icon(Icons.favorite, size: 24, color: Colors.red,), onPressed: () {}),
+            IconButton(
+                icon: const Icon(
+                  Icons.favorite,
+                  size: 24,
+                  color: Colors.red,
+                ),
+                onPressed: () {}),
           ],
         ),
         InfoData(
