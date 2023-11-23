@@ -7,7 +7,6 @@ class Artist {
   final String group;
   final List<Album> albumList;
   final String id;
-  final String appleUrl;
   final String role;
   final String about;
 
@@ -20,7 +19,6 @@ class Artist {
     required this.group,
     required this.albumList,
     required this.id,
-    required this.appleUrl,
     required this.role,
     required this.about,
   });

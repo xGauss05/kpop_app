@@ -57,8 +57,7 @@ class _MyAppState extends State<MyApp> {
             imgUrl:
                 "https://static.wikia.nocookie.net/twicenation/images/b/ba/CelebrateDigitalVersion.jpeg/revision/latest/scale-to-width-down/1000?cb=20220425132016"),
       ],
-      id: "123456789",
-      appleUrl: "https://music.apple.com/gb/artist/nayeon/1625812861");
+      id: "123456789",);
 
   @override
   Widget build(BuildContext context) {

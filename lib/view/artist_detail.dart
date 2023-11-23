@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kpop_app/model/artist.dart';
+import 'package:kpop_app/theme.dart';
 
 class ArtistDetail extends StatefulWidget {
   const ArtistDetail({super.key, required this.artist});
@@ -33,10 +34,11 @@ class _ArtistDetailState extends State<ArtistDetail> {
           children: [
             ImageSection(artist: widget.artist),
             Align(
+              heightFactor: 0.9,
               alignment: Alignment.bottomCenter,
               child: Container(
                 width: screenSize.width,
-                height: screenSize.height,
+                //height: screenSize.height,
                 decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
@@ -44,98 +46,33 @@ class _ArtistDetailState extends State<ArtistDetail> {
                     topLeft: Radius.circular(30),
                   ),
                 ),
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.vertical,
-                  child: Padding(
-                    padding:
-                        const EdgeInsets.only(left: 20, right: 20, top: 20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          widget.artist.realName,
-                          style: const TextStyle(fontSize: 50),
-                        ),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            const Text(
-                              "Artist name: ",
-                              style: TextStyle(fontSize: 20),
-                            ),
-                            Flexible(child: Text(widget.artist.artistName)),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            const Text(
-                              "Group: ",
-                              style: TextStyle(fontSize: 20),
-                            ),
-                            Flexible(child: Text(widget.artist.group)),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            const Text(
-                              "Debut date: ",
-                              style: TextStyle(fontSize: 20),
-                            ),
-                            Flexible(child: Text(widget.artist.debutDate)),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            const Text(
-                              "Role: ",
-                              style: TextStyle(fontSize: 20),
-                            ),
-                            Flexible(child: Text(widget.artist.role)),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            const Text(
-                              "Apple URL: ",
-                              style: TextStyle(fontSize: 20),
-                            ),
-                            Flexible(child: Text(widget.artist.appleUrl)),
-                          ],
-                        ),
-                        const Text(
-                          "About",
-                          style: TextStyle(fontSize: 20),
-                        ),
-                        Text(widget.artist.about),
-                        const Text("Album list"),
-                        SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
-                            children: widget.artist.albumList
-                                .map(
-                                  (album) => Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Column(
-                                      children: [
-                                        Image.network(
-                                          album.imgUrl,
-                                          width: 100,
-                                          height: 100,
-                                        ),
-                                        Text(album.albumName),
-                                      ],
-                                    ),
-                                  ),
-                                )
-                                .toList(),
-                          ),
-                        ),
-                      ],
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: InfoSection(artist: widget.artist),
                     ),
-                  ),
+                    const SizedBox(height: 16),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Text(
+                        "Album list",
+                        style: KpopTheme.titleTextStyle,
+                      ),
+                    ),
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: widget.artist.albumList
+                            .map((album) => AlbumWidget(album: album))
+                            .toList(),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),
@@ -158,6 +95,34 @@ class _ArtistDetailState extends State<ArtistDetail> {
   }
 }
 
+class InfoData extends StatelessWidget {
+  const InfoData({
+    super.key,
+    required this.name,
+    required this.value,
+  });
+
+  final String name;
+  final String value;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          name,
+          style: KpopTheme.subtitleTextStyle,
+        ),
+        Text(
+          value,
+          style: KpopTheme.titleTextStyle,
+        ),
+      ],
+    );
+  }
+}
+
 class ImageSection extends StatelessWidget {
   const ImageSection({
     super.key,
@@ -169,21 +134,96 @@ class ImageSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
-    return Stack(
+    return SizedBox(
+      height: screenSize.height / 1.8,
+      width: screenSize.width,
+      child: Image.network(artist.imgUrl, fit: BoxFit.cover),
+    );
+  }
+}
+
+class InfoSection extends StatelessWidget {
+  const InfoSection({
+    super.key,
+    required this.artist,
+  });
+
+  final Artist artist;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(
-          height: screenSize.height / 1.8,
-          width: screenSize.width,
-          child: Image.network(artist.imgUrl, fit: BoxFit.cover),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Expanded(
+              child: Text(
+                artist.realName,
+                style: const TextStyle(fontSize: 50),
+              ),
+            ),
+            IconButton(icon: const Icon(Icons.favorite, size: 24, color: Colors.red,), onPressed: () {}),
+          ],
         ),
-        const Align(
-          alignment: Alignment.topRight,
-          child: Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Icon(Icons.favorite_border),
-          ),
+        InfoData(
+          name: 'Artist name',
+          value: artist.artistName,
+        ),
+        const SizedBox(height: 16),
+        InfoData(
+          name: 'Group',
+          value: artist.group,
+        ),
+        const SizedBox(height: 16),
+        InfoData(
+          name: 'Role',
+          value: artist.role,
+        ),
+        const SizedBox(height: 16),
+        InfoData(
+          name: 'Debut date',
+          value: artist.debutDate,
+        ),
+        const SizedBox(height: 16),
+        Text(
+          "About",
+          style: KpopTheme.titleTextStyle,
+        ),
+        Text(
+          artist.about,
+          textAlign: TextAlign.justify,
         ),
       ],
+    );
+  }
+}
+
+class AlbumWidget extends StatelessWidget {
+  const AlbumWidget({super.key, required this.album});
+
+  final Album album;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(8.0),
+      height: 205,
+      width: 160,
+      child: Column(
+        children: [
+          Image.network(
+            album.imgUrl,
+            fit: BoxFit.fitWidth,
+          ),
+          Text(
+            album.albumName,
+            style: KpopTheme.subtitleTextStyle,
+            maxLines: 2,
+          ),
+        ],
+      ),
     );
   }
 }
