@@ -30,25 +30,35 @@ class _MyAppState extends State<MyApp> {
             ),
           ],
         ),
+        backgroundColor: const Color.fromARGB(255, 212, 238, 250),
         body: ArtistDetail(
-            artist: Artist(
-                realName: "Im Nayeon",
-                artistName: "Nayeon",
-                age: 27,
-                debutDate: "debutDate",
-                imgUrl: "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/bc/c7/aa/bcc7aaac-311a-bd86-fd0d-3904d56a06fb/pr_source.png/450x400bb.jpg",
-                group: "TWICE",
-                albumList: null,
-                id: "123456789",
-                appleUrl: "https://music.apple.com/gb/artist/nayeon/1625812861")),
+          artist: Artist(
+              realName: "Im Nayeon",
+              artistName: "Nayeon",
+              age: 27,
+              debutDate: "debutDate",
+              imgUrl:
+                  "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/bc/c7/aa/bcc7aaac-311a-bd86-fd0d-3904d56a06fb/pr_source.png/960x960bb.jpg",
+              group: "TWICE",
+              albumList: null,
+              id: "123456789",
+              appleUrl: "https://music.apple.com/gb/artist/nayeon/1625812861"),
+        ),
         bottomNavigationBar: BottomNavigationBar(
+          backgroundColor: appTheme,
+          selectedItemColor: Colors.white,
+          unselectedItemColor: Colors.black,
           items: const [
             BottomNavigationBarItem(
-              icon: Icon(Icons.search),
+              icon: Icon(
+                Icons.search,
+              ),
               label: 'Search',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.book),
+              icon: Icon(
+                Icons.book,
+              ),
               label: 'Saved',
             ),
           ],
