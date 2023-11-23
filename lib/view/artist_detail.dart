@@ -9,9 +9,35 @@ class ArtistDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      children: [
+        ImageSection(artist: artist),
+      ],
+    );
+  }
+}
+
+class ImageSection extends StatelessWidget {
+  const ImageSection({
+    super.key,
+    required this.artist,
+  });
+
+  final Artist artist;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        ImageBackground(artist: artist),
+        Stack(children: [
+          ImageBackground(artist: artist),
+          const Align(
+              alignment: Alignment.topRight,
+              child: Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Icon(Icons.favorite_border),
+              ))
+        ]),
       ],
     );
   }
@@ -29,7 +55,7 @@ class ImageBackground extends StatelessWidget {
   Widget build(BuildContext context) {
     final scrS = MediaQuery.of(context).size;
     return Row(
-      //mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Image(
           width: scrS.width,
