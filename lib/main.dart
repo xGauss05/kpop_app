@@ -60,6 +60,7 @@ class _MyAppState extends State<MyApp> {
           albumName: "IM NAYEON",
           imgUrl:
               "https://static.wikia.nocookie.net/twicenation/images/f/fd/Im_Nayeon_EP_digital_cover.png/revision/latest/scale-to-width-down/1000?cb=20220524073326"),
+          
     ],
     id: "123456789",
   );

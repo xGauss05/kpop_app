@@ -235,6 +235,7 @@ class AlbumWidget extends StatelessWidget {
             album.albumName,
             style: KpopTheme.subtitleTextStyle,
             maxLines: 2,
+            textAlign: TextAlign.center,
           ),
         ],
       ),
