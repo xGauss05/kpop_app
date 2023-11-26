@@ -39,7 +39,6 @@ class _ArtistDetailState extends State<ArtistDetail> {
               alignment: Alignment.bottomCenter,
               child: Container(
                 width: screenSize.width,
-                //height: screenSize.height,
                 decoration: const BoxDecoration(
                   gradient: LinearGradient(
                     begin: Alignment.topRight,
@@ -53,6 +52,14 @@ class _ArtistDetailState extends State<ArtistDetail> {
                     topRight: Radius.circular(30),
                     topLeft: Radius.circular(30),
                   ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black,
+                      spreadRadius: 10,
+                      blurRadius: 50,
+                      offset: Offset(0, 5),
+                    ),
+                  ],
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
