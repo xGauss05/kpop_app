@@ -1,51 +1,15 @@
-class Artist {
-  final String artistName;
-  final String realName;
-  final int age;
-  final String debutDate;
-  final String imgUrl;
-  final String group;
-  final List<Album> albumList;
-  final String id;
-  final String role;
-  final String about;
-
-  Artist({
-    required this.realName,
-    required this.artistName,
-    required this.age,
-    required this.debutDate,
-    required this.imgUrl,
-    required this.group,
-    required this.albumList,
-    required this.id,
-    required this.role,
-    required this.about,
-  });
-}
-
-class Album {
-  final String albumName;
-  final String imgUrl;
-
-  Album({
-    required this.albumName,
-    required this.imgUrl,
-  });
-}
-
 class Group {
-    String? agencyName;
-    DateTime? debutDate;
-    DateTime? disbandDate;
-    String? id;
-    List<Member>? members;
-    String name;
-    String? nameAlias;
-    String nameOriginal;
-    String? parentId;
-    String? thumbUrl;
-    List<String> urls;
+    final String agencyName;
+    final DateTime? debutDate;
+    final DateTime? disbandDate;
+    final String id;
+    final List<Member> members;
+    final String name;
+    final String? nameAlias;
+    final String nameOriginal;
+    final String? parentId;
+    final String? thumbUrl;
+    final List<String> urls;
 
     Group({
         required this.agencyName,
@@ -80,7 +44,7 @@ class Group {
         "debut_date": "${debutDate!.year.toString().padLeft(4, '0')}-${debutDate!.month.toString().padLeft(2, '0')}-${debutDate!.day.toString().padLeft(2, '0')}",
         "disband_date": "${disbandDate!.year.toString().padLeft(4, '0')}-${disbandDate!.month.toString().padLeft(2, '0')}-${disbandDate!.day.toString().padLeft(2, '0')}",
         "id": id,
-        "members": List<dynamic>.from(members!.map((x) => x.toMap())),
+        "members": List<dynamic>.from(members.map((x) => x.toMap())),
         "name": name,
         "name_alias": nameAlias,
         "name_original": nameOriginal,
@@ -91,9 +55,9 @@ class Group {
 }
 
 class Member {
-    bool current;
-    String idolId;
-    String? roles;
+    final bool current;
+    final String idolId;
+    final String? roles;
 
     Member({
         required this.current,
@@ -115,19 +79,19 @@ class Member {
 }
 
 class Idol {
-    DateTime birthDate;
-    DateTime? debutDate;
-    List<String> groups;
-    double? height;
-    String id;
-    String name;
-    String? nameAlias;
-    String nameOriginal;
-    String realName;
-    String realNameOriginal;
-    String thumbUrl;
-    List<String> urls;
-    double? weight;
+    final DateTime birthDate;
+    final DateTime? debutDate;
+    final List<String> groups;
+    final double? height;
+    final String id;
+    final String name;
+    final String? nameAlias;
+    final String nameOriginal;
+    final String realName;
+    final String realNameOriginal;
+    final String thumbUrl;
+    final List<String> urls;
+    final double? weight;
 
     Idol({
         required this.birthDate,

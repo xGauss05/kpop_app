@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:kpop_app/model/artist.dart';
 import 'package:kpop_app/theme.dart';
+import 'package:intl/intl.dart';
 
 class ArtistDetail extends StatefulWidget {
-  const ArtistDetail({super.key, required this.artist});
+  const ArtistDetail({super.key, required this.artist, required this.group});
 
-  final Artist artist;
+  final Idol artist;
+  final Group group;
 
   @override
   State<ArtistDetail> createState() => _ArtistDetailState();
@@ -66,24 +68,12 @@ class _ArtistDetailState extends State<ArtistDetail> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                      child: InfoSection(artist: widget.artist),
+                      child: InfoSection(
+                        artist: widget.artist,
+                        group: widget.group,
+                      ),
                     ),
                     const SizedBox(height: 16),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                      child: Text(
-                        "Album list",
-                        style: KpopTheme.titleTextStyle,
-                      ),
-                    ),
-                    SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        children: widget.artist.albumList
-                            .map((album) => AlbumWidget(album: album))
-                            .toList(),
-                      ),
-                    ),
                   ],
                 ),
               ),
@@ -144,7 +134,7 @@ class ImageSection extends StatelessWidget {
     required this.artist,
   });
 
-  final Artist artist;
+  final Idol artist;
 
   @override
   Widget build(BuildContext context) {
@@ -152,7 +142,7 @@ class ImageSection extends StatelessWidget {
     return SizedBox(
       height: screenSize.height / 1.8,
       width: screenSize.width,
-      child: Image.network(artist.imgUrl, fit: BoxFit.cover),
+      child: Image.network(artist.thumbUrl, fit: BoxFit.cover),
     );
   }
 }
@@ -161,10 +151,11 @@ class InfoSection extends StatelessWidget {
   const InfoSection({
     super.key,
     required this.artist,
+    required this.group,
   });
 
-  final Artist artist;
-
+  final Idol artist;
+  final Group group;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -189,63 +180,41 @@ class InfoSection extends StatelessWidget {
           ],
         ),
         InfoData(
-          name: 'Artist name',
-          value: artist.artistName,
+          name: 'Original name',
+          value: artist.nameOriginal,
+        ),
+        const SizedBox(height: 16),
+        InfoData(
+          name: 'Alias name',
+          value: artist.nameAlias ?? "No data",
         ),
         const SizedBox(height: 16),
         InfoData(
           name: 'Group',
-          value: artist.group,
+          value: group.name,
         ),
         const SizedBox(height: 16),
         InfoData(
-          name: 'Role',
-          value: artist.role,
+          name: 'Height',
+          value: artist.height == null
+              ? "No data"
+              : "${artist.height!.toInt()} cm",
+        ),
+        const SizedBox(height: 16),
+        InfoData(
+          name: "Weight",
+          value: artist.weight == null
+              ? "No data"
+              : "${artist.weight!.toInt()} kg",
         ),
         const SizedBox(height: 16),
         InfoData(
           name: 'Debut date',
-          value: artist.debutDate,
-        ),
-        const SizedBox(height: 16),
-        Text(
-          "About",
-          style: KpopTheme.titleTextStyle,
-        ),
-        Text(
-          artist.about,
-          textAlign: TextAlign.justify,
+          value: artist.debutDate == null
+              ? "No data"
+              : DateFormat('yyyy-MM-dd').format(artist.debutDate!).toString(),
         ),
       ],
-    );
-  }
-}
-
-class AlbumWidget extends StatelessWidget {
-  const AlbumWidget({super.key, required this.album});
-
-  final Album album;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(8.0),
-      height: 205,
-      width: 160,
-      child: Column(
-        children: [
-          Image.network(
-            album.imgUrl,
-            fit: BoxFit.fitWidth,
-          ),
-          Text(
-            album.albumName,
-            style: KpopTheme.subtitleTextStyle,
-            maxLines: 2,
-            textAlign: TextAlign.center,
-          ),
-        ],
-      ),
     );
   }
 }
