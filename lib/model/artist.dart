@@ -35,11 +35,11 @@ class Album {
 }
 
 class Group {
-    String agencyName;
+    String? agencyName;
     DateTime? debutDate;
     DateTime? disbandDate;
-    String id;
-    List<Member> members;
+    String? id;
+    List<Member>? members;
     String name;
     String? nameAlias;
     String nameOriginal;
@@ -80,7 +80,7 @@ class Group {
         "debut_date": "${debutDate!.year.toString().padLeft(4, '0')}-${debutDate!.month.toString().padLeft(2, '0')}-${debutDate!.day.toString().padLeft(2, '0')}",
         "disband_date": "${disbandDate!.year.toString().padLeft(4, '0')}-${disbandDate!.month.toString().padLeft(2, '0')}-${disbandDate!.day.toString().padLeft(2, '0')}",
         "id": id,
-        "members": List<dynamic>.from(members.map((x) => x.toMap())),
+        "members": List<dynamic>.from(members!.map((x) => x.toMap())),
         "name": name,
         "name_alias": nameAlias,
         "name_original": nameOriginal,

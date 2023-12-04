@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kpop_app/model/artist.dart';
+import 'package:kpop_app/model/kpop_manager.dart';
 import 'package:kpop_app/view/artist_detail.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -67,6 +68,8 @@ class _MyAppState extends State<MyApp> {
     id: "123456789",
   );
 
+  KpopManager? kpopManager;
+
   @override
   void initState() {
     super.initState();
@@ -77,7 +80,9 @@ class _MyAppState extends State<MyApp> {
     final uri = Uri.parse(url);
     var response = await http.get(uri);
     var decodedJson = jsonDecode(response.body);
+    kpopManager = KpopManager.fromJson(decodedJson);
     debugPrint(decodedJson.toString());
+    
     setState(() {});
   }
 
