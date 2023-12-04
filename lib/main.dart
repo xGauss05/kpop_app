@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:kpop_app/model/artist.dart';
 import 'package:kpop_app/view/artist_detail.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 void main() {
   runApp(const MyApp());
@@ -14,7 +16,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  
+  final url =
+      "https://raw.githubusercontent.com/kpopnet/kpopnet.json/master/kpopnet.json";
 
   final Artist artist = Artist(
     realName: "Im Na-yeon",
@@ -60,10 +63,23 @@ class _MyAppState extends State<MyApp> {
           albumName: "IM NAYEON",
           imgUrl:
               "https://static.wikia.nocookie.net/twicenation/images/f/fd/Im_Nayeon_EP_digital_cover.png/revision/latest/scale-to-width-down/1000?cb=20220524073326"),
-          
     ],
     id: "123456789",
   );
+
+  @override
+  void initState() {
+    super.initState();
+    getData();
+  }
+
+  getData() async {
+    final uri = Uri.parse(url);
+    var response = await http.get(uri);
+    var decodedJson = jsonDecode(response.body);
+    debugPrint(decodedJson.toString());
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
