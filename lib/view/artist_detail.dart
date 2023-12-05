@@ -4,10 +4,11 @@ import 'package:kpop_app/theme.dart';
 import 'package:intl/intl.dart';
 
 class ArtistDetail extends StatefulWidget {
-  const ArtistDetail({super.key, required this.artist, required this.group});
+  const ArtistDetail({super.key, required this.artist, required this.group, required this.member});
 
   final Idol artist;
   final Group group;
+  final Member member;
 
   @override
   State<ArtistDetail> createState() => _ArtistDetailState();
@@ -80,6 +81,7 @@ class _ArtistDetailState extends State<ArtistDetail> {
                         child: InfoSection(
                           artist: widget.artist,
                           group: widget.group,
+                          member: widget.member,
                         ),
                       ),
                       const SizedBox(height: 16),
@@ -162,10 +164,13 @@ class InfoSection extends StatelessWidget {
     super.key,
     required this.artist,
     required this.group,
+    required this.member,
   });
 
   final Idol artist;
   final Group group;
+  final Member member;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -196,6 +201,11 @@ class InfoSection extends StatelessWidget {
         InfoData(
           name: 'Group',
           value: group.name,
+        ),
+        const SizedBox(height: 16),
+         InfoData(
+          name: 'Role',
+          value: member.roles?? "No data",
         ),
         const SizedBox(height: 16),
         InfoData(

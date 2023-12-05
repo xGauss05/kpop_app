@@ -58,13 +58,16 @@ class _MyAppState extends State<MyApp> {
             );
           } else {
             final artist = snapshot.data!.idolList
-                .where((element) => element.name.contains("Nayeon"))
-                .elementAt(1);
+                .where((element) => element.name.contains("Jihyo"))
+                .elementAt(0);
             final group = snapshot.data!.groupList
                 .firstWhere((element) => element.id == artist.groups.first);
+            final member = group.members.firstWhere((element) => element.idolId == artist.id && element.current == true);
+          
             return ArtistDetail(
               artist: artist,
               group: group,
+              member: member
             );
           }
         },
