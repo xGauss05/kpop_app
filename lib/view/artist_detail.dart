@@ -4,7 +4,11 @@ import 'package:kpop_app/theme.dart';
 import 'package:intl/intl.dart';
 
 class ArtistDetail extends StatefulWidget {
-  const ArtistDetail({super.key, required this.artist, required this.group, required this.member});
+  const ArtistDetail(
+      {super.key,
+      required this.artist,
+      required this.group,
+      required this.member});
 
   final Idol artist;
   final Group group;
@@ -203,9 +207,9 @@ class InfoSection extends StatelessWidget {
           value: group.name,
         ),
         const SizedBox(height: 16),
-         InfoData(
+        InfoData(
           name: 'Role',
-          value: member.roles?? "No data",
+          value: member.roles ?? "No data",
         ),
         const SizedBox(height: 16),
         InfoData(

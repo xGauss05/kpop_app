@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:kpop_app/model/artist.dart';
 import 'package:kpop_app/model/kpop_manager.dart';
 import 'package:kpop_app/view/artist_detail.dart';
 import 'package:http/http.dart' as http;
@@ -34,11 +33,13 @@ class _MyAppState extends State<MyApp> {
       var response = await http.get(uri);
       var decodedJson = jsonDecode(response.body);
       debugPrint(decodedJson.toString());
+
       return KpopManager.fromJson(decodedJson);
     } catch (error, stackTrace) {
       debugPrint(error.toString());
       debugPrintStack(stackTrace: stackTrace);
     }
+    return null;
   }
 
   @override
@@ -58,17 +59,14 @@ class _MyAppState extends State<MyApp> {
             );
           } else {
             final artist = snapshot.data!.idolList
-                .where((element) => element.name.contains("Jihyo"))
-                .elementAt(0);
+                .where((element) => element.name.contains("Nayeon"))
+                .elementAt(1);
             final group = snapshot.data!.groupList
                 .firstWhere((element) => element.id == artist.groups.first);
-            final member = group.members.firstWhere((element) => element.idolId == artist.id && element.current == true);
-          
-            return ArtistDetail(
-              artist: artist,
-              group: group,
-              member: member
-            );
+            final member = group.members.firstWhere((element) =>
+                element.idolId == artist.id && element.current == true);
+
+            return ArtistDetail(artist: artist, group: group, member: member);
           }
         },
       ),
