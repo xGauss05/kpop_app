@@ -32,53 +32,63 @@ class _ArtistDetailState extends State<ArtistDetail> {
         ),
       ),
       backgroundColor: const Color.fromARGB(255, 212, 238, 250),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            ImageSection(artist: widget.artist),
-            Align(
-              heightFactor: 0.9,
-              alignment: Alignment.bottomCenter,
-              child: Container(
-                width: screenSize.width,
-                decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topRight,
-                    end: Alignment.bottomLeft,
-                    colors: [
-                      Color.fromARGB(255, 234, 141, 141),
-                      Color.fromARGB(255, 255, 221, 225),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        backgroundColor: const Color.fromARGB(255, 241, 189, 189),
+        child: const Icon(
+          Icons.favorite,
+          color: Colors.red,
+        ),
+      ),
+      body: SizedBox(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              ImageSection(artist: widget.artist),
+              Align(
+                heightFactor: 0.9,
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                  width: screenSize.width,
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topRight,
+                      end: Alignment.bottomLeft,
+                      colors: [
+                        Color.fromARGB(255, 234, 141, 141),
+                        Color.fromARGB(255, 255, 221, 225),
+                      ],
+                    ),
+                    borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(30),
+                      topLeft: Radius.circular(30),
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black,
+                        spreadRadius: 10,
+                        blurRadius: 50,
+                        offset: Offset(0, 5),
+                      ),
                     ],
                   ),
-                  borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(30),
-                    topLeft: Radius.circular(30),
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black,
-                      spreadRadius: 10,
-                      blurRadius: 50,
-                      offset: Offset(0, 5),
-                    ),
-                  ],
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                      child: InfoSection(
-                        artist: widget.artist,
-                        group: widget.group,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                        child: InfoSection(
+                          artist: widget.artist,
+                          group: widget.group,
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 16),
-                  ],
+                      const SizedBox(height: 16),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -166,22 +176,16 @@ class InfoSection extends StatelessWidget {
           children: [
             Expanded(
               child: Text(
-                artist.realName,
+                "${artist.name} (${artist.nameOriginal})",
                 style: const TextStyle(fontSize: 50),
               ),
             ),
-            IconButton(
-                icon: const Icon(
-                  Icons.favorite,
-                  size: 24,
-                  color: Colors.red,
-                ),
-                onPressed: () {}),
           ],
         ),
+        const SizedBox(height: 16),
         InfoData(
-          name: 'Original name',
-          value: artist.nameOriginal,
+          name: 'Real name',
+          value: "${artist.realName} (${artist.realNameOriginal})",
         ),
         const SizedBox(height: 16),
         InfoData(
@@ -206,6 +210,11 @@ class InfoSection extends StatelessWidget {
           value: artist.weight == null
               ? "No data"
               : "${artist.weight!.toInt()} kg",
+        ),
+        const SizedBox(height: 16),
+        InfoData(
+          name: 'Birth date',
+          value: DateFormat('yyyy-MM-dd').format(artist.birthDate).toString(),
         ),
         const SizedBox(height: 16),
         InfoData(

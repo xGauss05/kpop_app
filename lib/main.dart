@@ -30,18 +30,14 @@ class _MyAppState extends State<MyApp> {
 
   Future<KpopManager?> getData() async {
     try {
-
       final uri = Uri.parse(url);
       var response = await http.get(uri);
       var decodedJson = jsonDecode(response.body);
       debugPrint(decodedJson.toString());
       return KpopManager.fromJson(decodedJson);
-
     } catch (error, stackTrace) {
-
       debugPrint(error.toString());
       debugPrintStack(stackTrace: stackTrace);
-
     }
   }
 
@@ -49,23 +45,30 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: FutureBuilder(
-          future: kpopManager,
-          builder: (context, snapshot) {
-            if (snapshot.hasError) {
-              return const Scaffold(
-                backgroundColor: Colors.red,
-              );
-            }
-            if (snapshot.data == null) {
-              return const Scaffold(
-                body: Center(child: CircularProgressIndicator()),
-              );
-            } else {
-              final artist = snapshot.data!.idolList.where((element) => element.name.contains("Nayeon")).elementAt(1);
-              final group = snapshot.data!.groupList.firstWhere((element) => element.id == artist.groups.first);
-              return ArtistDetail(artist: artist, group: group,);
-            }
-          },),
+        future: kpopManager,
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return const Scaffold(
+              backgroundColor: Colors.red,
+            );
+          }
+          if (snapshot.data == null) {
+            return const Scaffold(
+              body: Center(child: CircularProgressIndicator()),
+            );
+          } else {
+            final artist = snapshot.data!.idolList
+                .where((element) => element.name.contains("Nayeon"))
+                .elementAt(1);
+            final group = snapshot.data!.groupList
+                .firstWhere((element) => element.id == artist.groups.first);
+            return ArtistDetail(
+              artist: artist,
+              group: group,
+            );
+          }
+        },
+      ),
     );
   }
 }
