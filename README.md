@@ -1,16 +1,21 @@
 # kpop_app
 
-A new Flutter project.
+A Flutter project for the Mobile Devices subject, Universitat Politécnica de Catalunya, CITM 2023-2024, that uses [this json](https://raw.githubusercontent.com/kpopnet/kpopnet.json/master/kpopnet.json) to receive API requests to load data in the app.
 
-## Getting Started
+## Author
 
-This project is a starting point for a Flutter application.
+- Jonathan Cacay Llanes - [xGauss05](https://github.com/xGauss05)
 
-A few resources to get you started if this is your first Flutter project:
+## Mentions
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Thanks to [kpopnet](https://github.com/kpopnet) GitHub organization for uploading the json that it is being used by the app.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## License
+
+This project is licensed under an unmodified MIT license, which is an OSI-certified license that allows static linking with closed source software. Check [LICENSE](LICENSE) for further details.
+
+## Screens
+
+- Idol detail
+
+![image](https://github.com/xGauss05/kpop_app/assets/57706173/1d4aa289-7f47-46a9-9f39-a9ad5fc0e88e)
