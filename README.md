@@ -1,3 +1,5 @@
+Project repository: https://github.com/xGauss05/kpop_app
+
 # kpop_app
 
 A Flutter project for the Mobile Devices subject, Universitat Politécnica de Catalunya, CITM 2023-2024, that uses [this json](https://raw.githubusercontent.com/kpopnet/kpopnet.json/master/kpopnet.json) to receive API requests to load data in the app.
