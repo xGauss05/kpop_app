@@ -20,7 +20,7 @@ class ArtistDetail extends StatefulWidget {
 
 class _ArtistDetailState extends State<ArtistDetail> {
   final scrollController = ScrollController();
-  final Color appTheme = const Color.fromARGB(255, 240, 55, 108);
+  final Color appTheme = KpopTheme.primaryColor;
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.sizeOf(context);
@@ -39,7 +39,7 @@ class _ArtistDetailState extends State<ArtistDetail> {
       backgroundColor: const Color.fromARGB(255, 212, 238, 250),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
-        backgroundColor: const Color.fromARGB(255, 241, 189, 189),
+        backgroundColor: KpopTheme.buttonColor, 
         child: const Icon(
           Icons.favorite,
           color: Colors.red,
@@ -60,8 +60,8 @@ class _ArtistDetailState extends State<ArtistDetail> {
                       begin: Alignment.topRight,
                       end: Alignment.bottomLeft,
                       colors: [
-                        Color.fromARGB(255, 234, 141, 141),
-                        Color.fromARGB(255, 255, 221, 225),
+                        KpopTheme.mainColor,
+                        KpopTheme.subColor,
                       ],
                     ),
                     borderRadius: BorderRadius.only(
@@ -96,21 +96,6 @@ class _ArtistDetailState extends State<ArtistDetail> {
             ],
           ),
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: appTheme,
-        selectedItemColor: Colors.white,
-        unselectedItemColor: Colors.black,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: 'Search',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.book),
-            label: 'Saved',
-          ),
-        ],
       ),
     );
   }

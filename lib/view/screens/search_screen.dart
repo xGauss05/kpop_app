@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:kpop_app/model/artist.dart';
 import 'package:kpop_app/model/kpop_manager.dart';
+import 'package:kpop_app/theme.dart';
 import 'package:provider/provider.dart';
 
 class SearchScreen extends StatelessWidget {
@@ -59,12 +60,15 @@ class _SearchViewState extends State<SearchView> {
 
   void onSearchChanged() {
     final query = controller.text.trim();
-    
-    if (query.isEmpty) return;
 
-    results = widget.kpopManager.idolList
-        .where((idol) => idol.name.toLowerCase().contains(query.toLowerCase()))
-        .toList();
+    if (query.isEmpty) return;
+    setState(() {
+      results = widget.kpopManager.idolList
+          .where(
+              (idol) => idol.name.toLowerCase().contains(query.toLowerCase()))
+          .toList();
+    });
+
     debugPrint(results.toString());
   }
 
@@ -77,19 +81,90 @@ class _SearchViewState extends State<SearchView> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Expanded(
-          child: TextField(
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        children: [
+          TextField(
             controller: controller,
             decoration: const InputDecoration(
               hintText: 'Example: Nayeon',
               labelText: 'Artist name',
             ),
           ),
-        ),
-      ],
+          Expanded(
+            child: ListView.builder(
+              itemCount: results.length,
+              itemBuilder: (context, index) {
+                final idol = results[index];
+                final group = widget.kpopManager.groupList
+                    .firstWhere((group) => group.id == idol.groups.first);
+                return Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: IdolListItem(
+                    idol: idol,
+                    group: group,
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
+      ),
     );
-    ;
+  }
+}
+
+class IdolListItem extends StatelessWidget {
+  const IdolListItem({
+    super.key,
+    required this.idol,
+    required this.group,
+  });
+
+  final Group group;
+  final Idol idol;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 300,
+      height: 60,
+      decoration: const BoxDecoration(
+        color: KpopTheme.mainColor,
+        borderRadius: BorderRadius.all(
+          Radius.circular(10),
+        ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(5.0),
+        child: Row(
+          children: [
+            CircleAvatar(
+              foregroundImage: NetworkImage(
+                idol.thumbUrl,
+              ),
+              radius: 24,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    idol.name,
+                    style: KpopTheme.titleTextStyle,
+                  ),
+                  Text(
+                    group.name,
+                    style: KpopTheme.subtitleTextStyle,
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

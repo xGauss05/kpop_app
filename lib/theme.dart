@@ -10,4 +10,10 @@ class KpopTheme {
   static final subtitleTextStyle = GoogleFonts.nunitoSans(
     fontSize: 16,
   );
+
+  static const mainColor = Color.fromARGB(255, 234, 141, 141);
+  static const subColor = Color.fromARGB(255, 255, 221, 225);
+  static const buttonColor = Color.fromARGB(255, 241, 189, 189);
+  static const primaryColor = Color.fromARGB(255, 240, 55, 108);
+  
 }
