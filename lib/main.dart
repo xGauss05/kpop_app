@@ -1,13 +1,11 @@
-import 'package:flutter/material.dart';
-import 'package:kpop_app/model/kpop_manager.dart';
-import 'package:http/http.dart' as http;
-import 'package:kpop_app/view/screens/navigation_screen.dart';
 import 'dart:convert';
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
-
-import 'package:kpop_app/view/screens/artist_screen.dart';
-import 'package:kpop_app/view/screens/favorite_screen.dart';
-import 'package:kpop_app/view/screens/search_screen.dart';
+import 'package:kpop_app/model/kpop_manager.dart';
+import 'package:kpop_app/view/navigation_screen.dart';
+import 'package:kpop_app/view/favorite_screen.dart';
+import 'package:kpop_app/view/search_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -53,7 +51,6 @@ class _MyAppState extends State<MyApp> {
       value: kpopManager,
       child: MaterialApp(
         routes: {
-          "home": (_) => const ArtistScreen(),
           "search": (_) => const SearchScreen(),
           "favorite": (_) => const FavoriteScreen(),
           "navigation": (_) => const NavigationScreen(),

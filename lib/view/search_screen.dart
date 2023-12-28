@@ -1,11 +1,10 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:collection/collection.dart';
 import 'package:kpop_app/model/artist.dart';
 import 'package:kpop_app/model/kpop_manager.dart';
 import 'package:kpop_app/theme.dart';
-import 'package:kpop_app/view/screens/artist_screen.dart';
-import 'package:provider/provider.dart';
+import 'package:kpop_app/view/idol_screen.dart';
 
 class SearchScreen extends StatelessWidget {
   const SearchScreen({
@@ -99,12 +98,15 @@ class _SearchViewState extends State<SearchView> {
               itemBuilder: (context, index) {
                 final idol = results[index];
                 final group = widget.kpopManager.groupList
-                    .firstWhere((group) => group.id == idol.groups.first);
+                    .firstWhereOrNull((group) => group.id == idol.groups.firstOrNull);
+                final member = group?.members.firstWhereOrNull((element) =>
+                    element.idolId == idol.id && element.current == true);
                 return Padding(
                   padding: const EdgeInsets.all(5.0),
                   child: IdolListItem(
                     idol: idol,
                     group: group,
+                    member: member,
                   ),
                 );
               },
@@ -121,15 +123,24 @@ class IdolListItem extends StatelessWidget {
     super.key,
     required this.idol,
     required this.group,
+    required this.member,
   });
 
-  final Group group;
+  final Group? group;
   final Idol idol;
+  final Member? member;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => ArtistScreen())),
+      onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => IdolScreen(
+                    idol: idol,
+                    group: group,
+                    member: member,
+                  ))),
       child: Container(
         width: 300,
         height: 60,
@@ -159,7 +170,7 @@ class IdolListItem extends StatelessWidget {
                       style: KpopTheme.titleTextStyle,
                     ),
                     Text(
-                      group.name,
+                      group?.name ?? "No data",
                       style: KpopTheme.subtitleTextStyle,
                     ),
                   ],

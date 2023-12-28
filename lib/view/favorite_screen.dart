@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:kpop_app/model/kpop_manager.dart';
 import 'package:provider/provider.dart';
+import 'package:kpop_app/model/kpop_manager.dart';
 
 class FavoriteScreen extends StatelessWidget {
   const FavoriteScreen({

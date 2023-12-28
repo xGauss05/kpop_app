@@ -1,24 +1,24 @@
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:kpop_app/model/artist.dart';
 import 'package:kpop_app/theme.dart';
-import 'package:intl/intl.dart';
 
-class ArtistDetail extends StatefulWidget {
-  const ArtistDetail(
+class IdolScreen extends StatefulWidget {
+  const IdolScreen(
       {super.key,
-      required this.artist,
+      required this.idol,
       required this.group,
       required this.member});
 
-  final Idol artist;
-  final Group group;
-  final Member member;
+  final Idol idol;
+  final Group? group;
+  final Member? member;
 
   @override
-  State<ArtistDetail> createState() => _ArtistDetailState();
+  State<IdolScreen> createState() => _IdolScreenState();
 }
 
-class _ArtistDetailState extends State<ArtistDetail> {
+class _IdolScreenState extends State<IdolScreen> {
   final scrollController = ScrollController();
   final Color appTheme = KpopTheme.primaryColor;
   @override
@@ -42,7 +42,7 @@ class _ArtistDetailState extends State<ArtistDetail> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              ImageSection(artist: widget.artist),
+              ImageSection(artist: widget.idol),
               Align(
                 heightFactor: 0.9,
                 alignment: Alignment.bottomCenter,
@@ -76,7 +76,7 @@ class _ArtistDetailState extends State<ArtistDetail> {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16.0),
                         child: InfoSection(
-                          artist: widget.artist,
+                          artist: widget.idol,
                           group: widget.group,
                           member: widget.member,
                         ),
@@ -150,8 +150,8 @@ class InfoSection extends StatelessWidget {
   });
 
   final Idol artist;
-  final Group group;
-  final Member member;
+  final Group? group;
+  final Member? member;
 
   @override
   Widget build(BuildContext context) {
@@ -182,12 +182,12 @@ class InfoSection extends StatelessWidget {
         const SizedBox(height: 16),
         InfoData(
           name: 'Group',
-          value: group.name,
+          value: group?.name ?? "No data",
         ),
         const SizedBox(height: 16),
         InfoData(
           name: 'Role',
-          value: member.roles ?? "No data",
+          value: member?.roles ?? "No data",
         ),
         const SizedBox(height: 16),
         InfoData(
