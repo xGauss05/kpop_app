@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:kpop_app/model/kpop_manager.dart';
 import 'package:kpop_app/view/artist_detail.dart';
+import 'package:provider/provider.dart';
 
 class ArtistScreen extends StatelessWidget {
   const ArtistScreen({
     super.key,
-    required this.kpopManager,
   });
-
-  final Future<KpopManager?> kpopManager;
 
   @override
   Widget build(BuildContext context) {
+    final kpopManager = context.read<Future<KpopManager?>>();
     return FutureBuilder(
       future: kpopManager,
       builder: (context, snapshot) {

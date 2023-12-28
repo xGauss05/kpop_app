@@ -140,4 +140,7 @@ class Idol {
         "urls": List<dynamic>.from(urls.map((x) => x)),
         "weight": weight,
     };
+
+    @override
+    String toString() { return name; }
 }

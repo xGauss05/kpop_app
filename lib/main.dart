@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kpop_app/model/kpop_manager.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:provider/provider.dart';
 
 import 'package:kpop_app/view/screens/artist_screen.dart';
 import 'package:kpop_app/view/screens/favorite_screen.dart';
@@ -35,26 +36,28 @@ class _MyAppState extends State<MyApp> {
       final uri = Uri.parse(url);
       var response = await http.get(uri);
       var decodedJson = jsonDecode(response.body);
-      debugPrint(decodedJson.toString());
+      //debugPrint(decodedJson.toString());
 
       return KpopManager.fromJson(decodedJson);
     } catch (error, stackTrace) {
       debugPrint(error.toString());
-      debugPrintStack(stackTrace: stackTrace);
+      //debugPrintStack(stackTrace: stackTrace);
     }
     return null;
   }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-       routes: {
-        "home": (context) => ArtistScreen(kpopManager: kpopManager),
-        "search": (context) => const SearchScreen(),
-        "favorite": (context) => const FavoriteScreen(),
-      },
-       initialRoute: "home",
+    return Provider.value(
+      value: kpopManager,
+      child: MaterialApp(
+        routes: {
+          "home": (context) => const ArtistScreen(),
+          "search": (context) => const SearchScreen(),
+          "favorite": (context) => const FavoriteScreen(),
+        },
+        initialRoute: "search",
+      ),
     );
   }
 }
-
