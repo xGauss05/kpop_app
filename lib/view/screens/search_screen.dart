@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:kpop_app/model/artist.dart';
 import 'package:kpop_app/model/kpop_manager.dart';
 import 'package:kpop_app/theme.dart';
+import 'package:kpop_app/view/screens/artist_screen.dart';
 import 'package:provider/provider.dart';
 
 class SearchScreen extends StatelessWidget {
@@ -127,42 +128,45 @@ class IdolListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 300,
-      height: 60,
-      decoration: const BoxDecoration(
-        color: KpopTheme.mainColor,
-        borderRadius: BorderRadius.all(
-          Radius.circular(10),
+    return GestureDetector(
+      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => ArtistScreen())),
+      child: Container(
+        width: 300,
+        height: 60,
+        decoration: const BoxDecoration(
+          color: KpopTheme.mainColor,
+          borderRadius: BorderRadius.all(
+            Radius.circular(10),
+          ),
         ),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(5.0),
-        child: Row(
-          children: [
-            CircleAvatar(
-              foregroundImage: NetworkImage(
-                idol.thumbUrl,
+        child: Padding(
+          padding: const EdgeInsets.all(5.0),
+          child: Row(
+            children: [
+              CircleAvatar(
+                foregroundImage: NetworkImage(
+                  idol.thumbUrl,
+                ),
+                radius: 24,
               ),
-              radius: 24,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    idol.name,
-                    style: KpopTheme.titleTextStyle,
-                  ),
-                  Text(
-                    group.name,
-                    style: KpopTheme.subtitleTextStyle,
-                  ),
-                ],
+              Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      idol.name,
+                      style: KpopTheme.titleTextStyle,
+                    ),
+                    Text(
+                      group.name,
+                      style: KpopTheme.subtitleTextStyle,
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

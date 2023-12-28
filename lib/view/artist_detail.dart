@@ -28,13 +28,6 @@ class _ArtistDetailState extends State<ArtistDetail> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: appTheme,
-        leading: const IconButton(
-          onPressed: null,
-          icon: Icon(
-            Icons.arrow_back,
-            color: Colors.black,
-          ),
-        ),
       ),
       backgroundColor: const Color.fromARGB(255, 212, 238, 250),
       floatingActionButton: FloatingActionButton(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kpop_app/model/kpop_manager.dart';
 import 'package:http/http.dart' as http;
+import 'package:kpop_app/view/screens/navigation_screen.dart';
 import 'dart:convert';
 import 'package:provider/provider.dart';
 
@@ -52,11 +53,12 @@ class _MyAppState extends State<MyApp> {
       value: kpopManager,
       child: MaterialApp(
         routes: {
-          "home": (context) => const ArtistScreen(),
-          "search": (context) => const SearchScreen(),
-          "favorite": (context) => const FavoriteScreen(),
+          "home": (_) => const ArtistScreen(),
+          "search": (_) => const SearchScreen(),
+          "favorite": (_) => const FavoriteScreen(),
+          "navigation": (_) => const NavigationScreen(),
         },
-        initialRoute: "search",
+        initialRoute: "navigation",
       ),
     );
   }
