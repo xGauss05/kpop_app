@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:kpop_app/model/kpop_manager.dart';
-import 'package:kpop_app/view/artist_detail.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+
+import 'package:kpop_app/view/screens/artist_screen.dart';
+import 'package:kpop_app/view/screens/favorite_screen.dart';
+import 'package:kpop_app/view/screens/search_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -45,31 +48,13 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: FutureBuilder(
-        future: kpopManager,
-        builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            return const Scaffold(
-              backgroundColor: Colors.red,
-            );
-          }
-          if (snapshot.data == null) {
-            return const Scaffold(
-              body: Center(child: CircularProgressIndicator()),
-            );
-          } else {
-            final artist = snapshot.data!.idolList
-                .where((element) => element.name.contains("Nayeon"))
-                .elementAt(1);
-            final group = snapshot.data!.groupList
-                .firstWhere((element) => element.id == artist.groups.first);
-            final member = group.members.firstWhere((element) =>
-                element.idolId == artist.id && element.current == true);
-
-            return ArtistDetail(artist: artist, group: group, member: member);
-          }
-        },
-      ),
+       routes: {
+        "home": (context) => ArtistScreen(kpopManager: kpopManager),
+        "search": (context) => const SearchScreen(),
+        "favorite": (context) => const FavoriteScreen(),
+      },
+       initialRoute: "home",
     );
   }
 }
+
