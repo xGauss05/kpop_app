@@ -1,4 +1,5 @@
-import 'package:kpop_app/model/artist.dart';
+import 'package:kpop_app/model/group.dart';
+import 'package:kpop_app/model/idol.dart';
 
 class KpopManager {
   final List<Group> groupList;

@@ -1,6 +1,8 @@
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
-import 'package:kpop_app/model/artist.dart';
+import 'package:kpop_app/model/group.dart';
+import 'package:kpop_app/model/idol.dart';
+import 'package:kpop_app/model/member.dart';
 import 'package:kpop_app/theme.dart';
 
 class IdolScreen extends StatefulWidget {

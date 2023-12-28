@@ -35,12 +35,9 @@ class _MyAppState extends State<MyApp> {
       final uri = Uri.parse(url);
       var response = await http.get(uri);
       var decodedJson = jsonDecode(response.body);
-      //debugPrint(decodedJson.toString());
-
       return KpopManager.fromJson(decodedJson);
-    } catch (error, stackTrace) {
+    } catch (error) {
       debugPrint(error.toString());
-      //debugPrintStack(stackTrace: stackTrace);
     }
     return null;
   }

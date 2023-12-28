@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:kpop_app/model/group.dart';
+import 'package:kpop_app/model/member.dart';
 import 'package:provider/provider.dart';
 import 'package:collection/collection.dart';
-import 'package:kpop_app/model/artist.dart';
+import 'package:kpop_app/model/idol.dart';
 import 'package:kpop_app/model/kpop_manager.dart';
 import 'package:kpop_app/theme.dart';
 import 'package:kpop_app/view/idol_screen.dart';
