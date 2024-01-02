@@ -2,8 +2,10 @@ import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:kpop_app/model/group.dart';
 import 'package:kpop_app/model/idol.dart';
+import 'package:kpop_app/model/kpop_manager.dart';
 import 'package:kpop_app/model/member.dart';
 import 'package:kpop_app/theme.dart';
+import 'package:provider/provider.dart';
 
 class IdolScreen extends StatefulWidget {
   const IdolScreen(
@@ -22,23 +24,46 @@ class IdolScreen extends StatefulWidget {
 
 class _IdolScreenState extends State<IdolScreen> {
   final scrollController = ScrollController();
-  final Color appTheme = KpopTheme.primaryColor;
+  bool isFavorite = false;
+
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.sizeOf(context);
-
+    final kpopManager = context.read<Future<KpopManager?>>();
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: appTheme,
+        backgroundColor: KpopTheme.primaryColor,
       ),
-      backgroundColor: const Color.fromARGB(255, 212, 238, 250),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        backgroundColor: KpopTheme.buttonColor,
-        child: const Icon(
-          Icons.favorite,
-          color: Colors.red,
-        ),
+      backgroundColor: KpopTheme.backgroundColor,
+      floatingActionButton: FutureBuilder(
+        future: kpopManager,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            if (snapshot.data!.favoriteList.contains(widget.idol)) {
+              isFavorite = true;
+            } else {
+              isFavorite = false;
+            }
+          }
+          return FloatingActionButton(
+            onPressed: () async {
+              setState(() {
+                if (isFavorite) {
+                  snapshot.data!.removeFavorite(widget.idol);
+                  isFavorite = false;
+                } else {
+                  snapshot.data!.addFavorite(widget.idol);
+                  isFavorite = true;
+                }
+              });
+            },
+            backgroundColor: KpopTheme.buttonColor,
+            child: Icon(
+              isFavorite ? Icons.favorite : Icons.favorite_outline_outlined,
+              color: Colors.red,
+            ),
+          );
+        },
       ),
       body: SizedBox(
         child: SingleChildScrollView(

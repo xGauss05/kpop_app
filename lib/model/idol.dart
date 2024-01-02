@@ -64,3 +64,4 @@ class Idol {
     @override
     String toString() { return name; }
 }
+

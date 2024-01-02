@@ -140,13 +140,15 @@ class IdolListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => IdolScreen(
-                    idol: idol,
-                    group: group,
-                    member: member,
-                  ))),
+        context,
+        MaterialPageRoute(
+          builder: (context) => IdolScreen(
+            idol: idol,
+            group: group,
+            member: member,
+          ),
+        ),
+      ),
       child: Container(
         width: 300,
         height: 60,

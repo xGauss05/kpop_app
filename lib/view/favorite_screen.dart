@@ -47,7 +47,7 @@ class FavoriteView extends StatefulWidget {
 
 class _FavoriteViewState extends State<FavoriteView> {
   final controller = TextEditingController();
-  List<Idol> favorites = [];
+  List<Idol> searchResults = [];
   bool loaded = false;
   @override
   void initState() {
@@ -61,7 +61,7 @@ class _FavoriteViewState extends State<FavoriteView> {
 
     if (query.isEmpty) return;
     setState(() {
-      favorites = widget.kpopManager.idolList
+      searchResults = widget.kpopManager.idolList
           .where(
               (idol) => idol.name.toLowerCase().contains(query.toLowerCase()))
           .toList();
@@ -92,7 +92,7 @@ class _FavoriteViewState extends State<FavoriteView> {
           ),
           Expanded(
             child: GridView.builder(
-              itemCount: favorites.length,
+              itemCount: searchResults.length,
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 4,
                 childAspectRatio: 3 / 4,

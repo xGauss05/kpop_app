@@ -15,5 +15,5 @@ class KpopTheme {
   static const subColor = Color.fromARGB(255, 255, 221, 225);
   static const buttonColor = Color.fromARGB(255, 241, 189, 189);
   static const primaryColor = Color.fromARGB(255, 240, 55, 108);
-  
+  static const backgroundColor = Color.fromARGB(255, 212, 238, 250);
 }

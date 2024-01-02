@@ -14,6 +14,7 @@ class KpopManager {
 
     favoriteIdols.add(idol.id);
     prefs.setStringList(idolFavoriteKey, favoriteIdols);
+    await getFavorites();
   }
 
   Future<void> removeFavorite(Idol idol) async {
@@ -22,17 +23,20 @@ class KpopManager {
 
     favoriteIdols.remove(idol.id);
     prefs.setStringList(idolFavoriteKey, favoriteIdols);
+    await getFavorites();
   }
 
   Future<void> getFavorites() async {
     final prefs = await SharedPreferences.getInstance();
     final favoriteIdols = prefs.getStringList(idolFavoriteKey) ?? [];
-    
+
+    favoriteList.clear();
     for (var element in idolList) {
-      if (favoriteIdols.contains(element.id) && !favoriteList.contains(element)) {
+      if (favoriteIdols.contains(element.id)) {
         favoriteList.add(element);
       }
     }
+    print(favoriteList.toString());
   }
 
   KpopManager({
