@@ -1,11 +1,11 @@
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
-import 'package:kpop_app/model/group.dart';
-import 'package:kpop_app/model/idol.dart';
-import 'package:kpop_app/model/kpop_manager.dart';
-import 'package:kpop_app/model/member.dart';
-import 'package:kpop_app/theme.dart';
 import 'package:provider/provider.dart';
+import 'package:kpop_app/model/idol.dart';
+import 'package:kpop_app/model/group.dart';
+import 'package:kpop_app/model/member.dart';
+import 'package:kpop_app/model/kpop_manager.dart';
+import 'package:kpop_app/theme.dart';
 
 class IdolScreen extends StatefulWidget {
   const IdolScreen(
@@ -50,9 +50,23 @@ class _IdolScreenState extends State<IdolScreen> {
               setState(() {
                 if (isFavorite) {
                   snapshot.data!.removeFavorite(widget.idol);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(
+                        "Removed ${widget.idol.name} from your favorites list.",
+                      ),
+                    ),
+                  );
                   isFavorite = false;
                 } else {
                   snapshot.data!.addFavorite(widget.idol);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(
+                        "Added ${widget.idol.name} to your favorites list.",
+                      ),
+                    ),
+                  );
                   isFavorite = true;
                 }
               });
