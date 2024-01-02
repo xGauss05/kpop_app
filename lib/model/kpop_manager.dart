@@ -1,19 +1,44 @@
-import 'dart:convert';
-import 'dart:io';
-
 import 'package:kpop_app/model/group.dart';
 import 'package:kpop_app/model/idol.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class KpopManager {
+  static const String idolFavoriteKey = 'favoriteIdols';
   final List<Group> groupList;
   final List<Idol> idolList;
-  List<Idol>? favoriteList;
+  final List<Idol> favoriteList = [];
 
-  KpopManager(
-      {required this.groupList,
-      required this.idolList,
-      });
+  Future<void> addFavorite(Idol idol) async {
+    final prefs = await SharedPreferences.getInstance();
+    final favoriteIdols = prefs.getStringList(idolFavoriteKey) ?? [];
+
+    favoriteIdols.add(idol.id);
+    prefs.setStringList(idolFavoriteKey, favoriteIdols);
+  }
+
+  Future<void> removeFavorite(Idol idol) async {
+    final prefs = await SharedPreferences.getInstance();
+    final favoriteIdols = prefs.getStringList(idolFavoriteKey) ?? [];
+
+    favoriteIdols.remove(idol.id);
+    prefs.setStringList(idolFavoriteKey, favoriteIdols);
+  }
+
+  Future<void> getFavorites() async {
+    final prefs = await SharedPreferences.getInstance();
+    final favoriteIdols = prefs.getStringList(idolFavoriteKey) ?? [];
+    
+    for (var element in idolList) {
+      if (favoriteIdols.contains(element.id) && !favoriteList.contains(element)) {
+        favoriteList.add(element);
+      }
+    }
+  }
+
+  KpopManager({
+    required this.groupList,
+    required this.idolList,
+  });
 
   factory KpopManager.fromJson(Map<String, dynamic> json) {
     return KpopManager(
@@ -25,17 +50,4 @@ class KpopManager {
           : List<Idol>.from(json["idols"].map((x) => Idol.fromMap(x))),
     );
   }
-}
-
-void saveIdols(List<Idol> idolList) async {
-  final dir = await getApplicationDocumentsDirectory();
-  final json = jsonEncode(idolList);
-  await File("${dir.absolute.path}/favorite_idols.json").writeAsString(json);
-}
-
-Future<List<Idol>> loadIdols() async {
-  final dir = await getApplicationDocumentsDirectory();
-  final json = await File("${dir.absolute.path}/favorite_idols.json").readAsString();
-  final List jsonList = jsonDecode(json);
-  return jsonList.map((t) => Idol.fromMap(t)).toList();
 }

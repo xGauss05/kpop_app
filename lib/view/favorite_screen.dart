@@ -53,12 +53,7 @@ class _FavoriteViewState extends State<FavoriteView> {
   void initState() {
     super.initState();
     controller.addListener(onSearchChanged);
-    loadIdols().then((loadedList) {
-      setState(() {
-        favorites = loadedList;
-        loaded = true;
-      });
-    });
+    widget.kpopManager.getFavorites();
   }
 
   void onSearchChanged() {
