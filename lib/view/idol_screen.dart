@@ -34,7 +34,7 @@ class _IdolScreenState extends State<IdolScreen> {
       backgroundColor: const Color.fromARGB(255, 212, 238, 250),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
-        backgroundColor: KpopTheme.buttonColor, 
+        backgroundColor: KpopTheme.buttonColor,
         child: const Icon(
           Icons.favorite,
           color: Colors.red,

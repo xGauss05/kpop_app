@@ -27,7 +27,9 @@ class SearchScreen extends StatelessWidget {
           }
           if (snapshot.data == null) {
             return const Scaffold(
-              body: Center(child: CircularProgressIndicator()),
+              body: Center(
+                child: CircularProgressIndicator(),
+              ),
             );
           } else {
             return SearchView(kpopManager: snapshot.data!);
@@ -86,12 +88,14 @@ class _SearchViewState extends State<SearchView> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          const Text("Search for a KPOP Artist"),
           TextField(
             controller: controller,
             decoration: const InputDecoration(
               hintText: 'Example: Nayeon',
-              labelText: 'Artist name',
+              labelText: 'Search artist name',
             ),
           ),
           Expanded(
@@ -99,8 +103,8 @@ class _SearchViewState extends State<SearchView> {
               itemCount: results.length,
               itemBuilder: (context, index) {
                 final idol = results[index];
-                final group = widget.kpopManager.groupList
-                    .firstWhereOrNull((group) => group.id == idol.groups.firstOrNull);
+                final group = widget.kpopManager.groupList.firstWhereOrNull(
+                    (group) => group.id == idol.groups.firstOrNull);
                 final member = group?.members.firstWhereOrNull((element) =>
                     element.idolId == idol.id && element.current == true);
                 return Padding(
