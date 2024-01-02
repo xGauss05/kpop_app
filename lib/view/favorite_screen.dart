@@ -1,7 +1,12 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:kpop_app/model/idol.dart';
 import 'package:provider/provider.dart';
+import 'package:kpop_app/model/idol.dart';
+import 'package:kpop_app/model/group.dart';
+import 'package:kpop_app/model/member.dart';
 import 'package:kpop_app/model/kpop_manager.dart';
+import 'package:kpop_app/view/idol_screen.dart';
+import 'package:kpop_app/theme.dart';
 
 class FavoriteScreen extends StatelessWidget {
   const FavoriteScreen({
@@ -47,24 +52,31 @@ class FavoriteView extends StatefulWidget {
 
 class _FavoriteViewState extends State<FavoriteView> {
   final controller = TextEditingController();
-  List<Idol> searchResults = [];
-  bool loaded = false;
+  List<Idol> searchResults = <Idol>[];
+
   @override
   void initState() {
     super.initState();
     controller.addListener(onSearchChanged);
-    widget.kpopManager.getFavorites();
+    widget.kpopManager.getFavorites().then((a) {
+      setState(() {
+        searchResults = widget.kpopManager.favoriteList;
+      });
+    });
   }
 
   void onSearchChanged() {
     final query = controller.text.trim();
 
-    if (query.isEmpty) return;
     setState(() {
-      searchResults = widget.kpopManager.idolList
-          .where(
-              (idol) => idol.name.toLowerCase().contains(query.toLowerCase()))
-          .toList();
+      if (query.isEmpty) {
+        searchResults = widget.kpopManager.favoriteList;
+      } else {
+        searchResults = widget.kpopManager.favoriteList
+            .where(
+                (idol) => idol.name.toLowerCase().contains(query.toLowerCase()))
+            .toList();
+      }
     });
   }
 
@@ -94,26 +106,86 @@ class _FavoriteViewState extends State<FavoriteView> {
             child: GridView.builder(
               itemCount: searchResults.length,
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 4,
+                crossAxisCount: 2,
+                mainAxisExtent: 200,
                 childAspectRatio: 3 / 4,
               ),
               itemBuilder: (context, index) {
-                return GridTile(
-                  header: const Text("Header"),
-                  footer: const Text("footer"),
-                  child: Center(
-                    child: Text(
-                      "$index",
-                      style: const TextStyle(
-                        fontSize: 30,
-                      ),
-                    ),
+                final idol = searchResults[index];
+                final group = widget.kpopManager.groupList.firstWhereOrNull(
+                    (group) => group.id == idol.groups.firstOrNull);
+                final member = group?.members.firstWhereOrNull((element) =>
+                    element.idolId == idol.id && element.current == true);
+
+                return Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: IdolGridItem(
+                    idol: idol,
+                    group: group,
+                    member: member,
                   ),
                 );
               },
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class IdolGridItem extends StatelessWidget {
+  const IdolGridItem({
+    super.key,
+    required this.idol,
+    required this.group,
+    required this.member,
+  });
+
+  final Group? group;
+  final Idol idol;
+  final Member? member;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => IdolScreen(
+            idol: idol,
+            group: group,
+            member: member,
+          ),
+        ),
+      ),
+      child: GridTile(
+        child: Container(
+          decoration: const BoxDecoration(
+            color: KpopTheme.subColor,
+            borderRadius: BorderRadius.all(
+              Radius.circular(12),
+            ),
+          ),
+          child: Column(
+            children: [
+              CircleAvatar(
+                foregroundImage: NetworkImage(
+                  idol.thumbUrl,
+                ),
+                radius: 50,
+              ),
+              Text(
+                idol.name,
+                style: KpopTheme.titleTextStyle,
+              ),
+              Text(
+                group?.name ?? "No data",
+                style: KpopTheme.subtitleTextStyle,
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
