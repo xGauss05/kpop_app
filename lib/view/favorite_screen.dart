@@ -65,7 +65,6 @@ class _FavoriteViewState extends State<FavoriteView> {
     });
   }
 
-
   void onSearchChanged() {
     final query = controller.text.trim();
 
@@ -90,46 +89,75 @@ class _FavoriteViewState extends State<FavoriteView> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text("Your favourite KPOP idols list"),
-          TextField(
-            controller: controller,
-            decoration: const InputDecoration(
-              hintText: 'Example: Nayeon',
-              labelText: 'Search artist name',
-            ),
-          ),
-          Expanded(
-            child: GridView.builder(
-              itemCount: searchResults.length,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                mainAxisExtent: 200,
-                childAspectRatio: 3 / 4,
-              ),
-              itemBuilder: (context, index) {
-                final idol = searchResults[index];
-                final group = widget.kpopManager.groupList.firstWhereOrNull(
-                    (group) => group.id == idol.groups.firstOrNull);
-                final member = group?.members.firstWhereOrNull((element) =>
-                    element.idolId == idol.id && element.current == true);
+    return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: KpopTheme.buttonColor,
+        onPressed: () async {
+          controller.clear();
 
-                return Padding(
-                  padding: const EdgeInsets.all(5.0),
-                  child: IdolGridItem(
-                    idol: idol,
-                    group: group,
-                    member: member,
-                  ),
-                );
-              },
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text(
+                "Refreshed favorites list!",
+              ),
             ),
-          ),
-        ],
+          );
+
+          setState(() {
+            widget.kpopManager.getFavorites().then((a) {
+              setState(() {
+                searchResults = widget.kpopManager.favoriteList;
+              });
+            });
+          });
+        },
+        child: const Icon(
+          Icons.repeat,
+          color: KpopTheme.primaryColor,
+        ),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text("Your favourite KPOP idols list"),
+            TextField(
+              controller: controller,
+              decoration: const InputDecoration(
+                hintText: 'Example: Nayeon',
+                labelText: 'Search artist name',
+              ),
+            ),
+            Expanded(
+              child: GridView.builder(
+                itemCount: searchResults.length,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  mainAxisExtent: 200,
+                  crossAxisSpacing: 5,
+                  mainAxisSpacing: 5,
+                ),
+                itemBuilder: (context, index) {
+                  final idol = searchResults[index];
+                  final group = widget.kpopManager.groupList.firstWhereOrNull(
+                      (group) => group.id == idol.groups.firstOrNull);
+                  final member = group?.members.firstWhereOrNull((element) =>
+                      element.idolId == idol.id && element.current == true);
+
+                  return Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: IdolGridItem(
+                      idol: idol,
+                      group: group,
+                      member: member,
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -149,6 +177,7 @@ class IdolGridItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenSize = MediaQuery.sizeOf(context);
     return GestureDetector(
       onTap: () => Navigator.push(
         context,
@@ -162,6 +191,8 @@ class IdolGridItem extends StatelessWidget {
       ),
       child: GridTile(
         child: Container(
+          width: screenSize.width,
+          height: screenSize.height / 1.8,
           decoration: const BoxDecoration(
             color: KpopTheme.subColor,
             borderRadius: BorderRadius.all(
@@ -170,19 +201,31 @@ class IdolGridItem extends StatelessWidget {
           ),
           child: Column(
             children: [
-              CircleAvatar(
-                foregroundImage: NetworkImage(
-                  idol.thumbUrl,
+              Container(
+                width: screenSize.width,
+                height: 120,
+                clipBehavior: Clip.antiAlias,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
                 ),
-                radius: 50,
+                child: Image.network(
+                  idol.thumbUrl,
+                  fit: BoxFit.cover,
+                ),
               ),
-              Text(
-                idol.name,
-                style: KpopTheme.titleTextStyle,
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: Text(
+                  idol.name,
+                  style: KpopTheme.titleTextStyle,
+                ),
               ),
-              Text(
-                group?.name ?? "No data",
-                style: KpopTheme.subtitleTextStyle,
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: Text(
+                  group?.name ?? "No data",
+                  style: KpopTheme.subtitleTextStyle,
+                ),
               ),
             ],
           ),
