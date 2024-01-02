@@ -65,6 +65,7 @@ class _FavoriteViewState extends State<FavoriteView> {
     });
   }
 
+
   void onSearchChanged() {
     final query = controller.text.trim();
 

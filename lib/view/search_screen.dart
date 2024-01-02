@@ -1,12 +1,12 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:kpop_app/model/idol.dart';
 import 'package:kpop_app/model/group.dart';
 import 'package:kpop_app/model/member.dart';
-import 'package:provider/provider.dart';
-import 'package:collection/collection.dart';
-import 'package:kpop_app/model/idol.dart';
 import 'package:kpop_app/model/kpop_manager.dart';
-import 'package:kpop_app/theme.dart';
 import 'package:kpop_app/view/idol_screen.dart';
+import 'package:kpop_app/theme.dart';
 
 class SearchScreen extends StatelessWidget {
   const SearchScreen({
@@ -60,20 +60,23 @@ class _SearchViewState extends State<SearchView> {
   void initState() {
     super.initState();
     controller.addListener(onSearchChanged);
+    widget.kpopManager.getFavorites();
+    results = widget.kpopManager.idolList;
   }
 
   void onSearchChanged() {
     final query = controller.text.trim();
 
-    if (query.isEmpty) return;
     setState(() {
-      results = widget.kpopManager.idolList
-          .where(
-              (idol) => idol.name.toLowerCase().contains(query.toLowerCase()))
-          .toList();
+      if (query.isEmpty) {
+        results = widget.kpopManager.idolList;
+      } else {
+        results = widget.kpopManager.idolList
+            .where(
+                (idol) => idol.name.toLowerCase().contains(query.toLowerCase()))
+            .toList();
+      }
     });
-
-    debugPrint(results.toString());
   }
 
   @override

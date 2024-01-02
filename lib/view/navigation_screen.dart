@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:kpop_app/theme.dart';
 import 'package:kpop_app/view/favorite_screen.dart';
 import 'package:kpop_app/view/search_screen.dart';
+import 'package:kpop_app/theme.dart';
 
 class NavigationScreen extends StatefulWidget {
   const NavigationScreen({super.key});
