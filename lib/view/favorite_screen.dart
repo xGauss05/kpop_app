@@ -121,12 +121,12 @@ class _FavoriteViewState extends State<FavoriteView> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text("Your favourite KPOP idols list"),
+            const Text("Your list of favorite KPOP idols"),
             TextField(
               controller: controller,
               decoration: const InputDecoration(
                 hintText: 'Example: Nayeon',
-                labelText: 'Search artist name',
+                labelText: 'Search idol name',
               ),
             ),
             Expanded(

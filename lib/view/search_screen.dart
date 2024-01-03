@@ -93,12 +93,12 @@ class _SearchViewState extends State<SearchView> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text("Search for a KPOP Artist"),
+          const Text("Search for a KPOP idol"),
           TextField(
             controller: controller,
             decoration: const InputDecoration(
               hintText: 'Example: Nayeon',
-              labelText: 'Search artist name',
+              labelText: 'Search idol name',
             ),
           ),
           Expanded(
