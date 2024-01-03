@@ -12,6 +12,12 @@ class NavigationScreen extends StatefulWidget {
 
 class _NavigationScreenState extends State<NavigationScreen> {
   int index = 0;
+
+  final List<Widget> screensList = [
+    const SearchScreen(),
+    const FavoriteScreen(),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,13 +48,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
           ),
         ],
       ),
-      body: IndexedStack(
-        index: index,
-        children: const [
-          SearchScreen(),
-          FavoriteScreen(),
-        ],
-      ),
+      body: screensList[index],
     );
   }
 }
