@@ -151,6 +151,20 @@ class _FavoriteViewState extends State<FavoriteView> {
                       idol: idol,
                       group: group,
                       member: member,
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => IdolScreen(
+                            idol: idol,
+                            group: group,
+                            member: member,
+                          ),
+                        ),
+                      ).then(
+                        (value) => setState(() {
+                          searchResults = widget.kpopManager.favoriteList;
+                        }),
+                      ),
                     ),
                   );
                 },
@@ -169,26 +183,19 @@ class IdolGridItem extends StatelessWidget {
     required this.idol,
     required this.group,
     required this.member,
+    required this.onTap,
   });
 
   final Group? group;
   final Idol idol;
   final Member? member;
+  final void Function() onTap;
 
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.sizeOf(context);
     return GestureDetector(
-      onTap: () => Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => IdolScreen(
-            idol: idol,
-            group: group,
-            member: member,
-          ),
-        ),
-      ),
+      onTap: onTap,
       child: GridTile(
         child: Container(
           width: screenSize.width,
