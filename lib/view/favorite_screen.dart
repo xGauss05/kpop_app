@@ -90,32 +90,6 @@ class _FavoriteViewState extends State<FavoriteView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: KpopTheme.buttonColor,
-        onPressed: () async {
-          controller.clear();
-
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text(
-                "Refreshed favorites list!",
-              ),
-            ),
-          );
-
-          setState(() {
-            widget.kpopManager.getFavorites().then((a) {
-              setState(() {
-                searchResults = widget.kpopManager.favoriteList;
-              });
-            });
-          });
-        },
-        child: const Icon(
-          Icons.repeat,
-          color: KpopTheme.primaryColor,
-        ),
-      ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
